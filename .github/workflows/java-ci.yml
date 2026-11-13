@@ -1,0 +1,39 @@
+name: Java CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+
+      - name: Build and run tests
+        working-directory: demo
+        run: mvn --batch-mode --no-transfer-progress verify
+
+      - name: Upload test and coverage reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-test-reports
+          path: |
+            demo/target/surefire-reports/
+            demo/target/cucumber-report.html
+            demo/target/cucumber-report.json
+            demo/target/site/jacoco/
+          if-no-files-found: warn
+          retention-days: 14

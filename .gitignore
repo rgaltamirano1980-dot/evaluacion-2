@@ -1,0 +1,16 @@
+# Maven build output
+target/
+
+# Compiled Java files and JVM crash dumps
+*.class
+hs_err_pid*
+replay_pid*
+
+# IntelliJ IDEA project files
+.idea/
+*.iml
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
